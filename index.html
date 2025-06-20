@@ -1,695 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LamaPBX</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap');
-        
-        :root {
-            --primary: #6A5ACD; /* SlateBlue */
-            --secondary: #8A2BE2; /* BlueViolet */
-            --accent: #FF69B4; /* HotPink */
-            --dark: #0c111d; /* Darker blue */
-            --light: #f0f4f8; /* Lighter grey-blue */
-            --success: #20c997; /* Brighter Teal */
-            --warning: #ffc107; /* Amber */
-            --danger: #dc3545; /* Brighter Red */
-            --tech-blue: #5DADE2; /* Lighter tech blue */
-            --tagline-glow: #90D5FF; 
-            --card-bg: rgba(20, 28, 46, 0.75); 
-            --border-color: rgba(100, 116, 139, 0.3);
-            /* For RGB versions of colors if needed for rgba() opacity with CSS variables */
-            --tech-blue-rgb: 93, 173, 226;
-            --primary-rgb: 106, 90, 205;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--dark), #161e31); 
-            color: var(--light);
-            overflow-x: hidden;
-            line-height: 1.7; 
-        }
-        
-        .gradient-bg {
-            position: relative;
-            min-height: 100vh;
-            background: radial-gradient(ellipse at 50% 20%, rgba(30, 27, 75, 0.5) 0%, var(--dark) 70%); 
-            overflow: hidden;
-            padding: 2rem;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Graduation Project Poster: LamaPBX AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1e3a8a;
+      --secondary-blue: #3b82f6;
+      --light-blue: #dbeafe;
+      --accent-orange: #f59e0b;
+      --success-green: #10b981;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      --header-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+      --card-bg: #ffffff;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --text-muted: #9ca3af;
+      --border-color: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
 
-        .emoji-icon {
-            /* Reset properties that might interfere with emoji rendering */
-            background: none !important;
-            -webkit-background-clip: initial !important;
-            background-clip: initial !important;
-            color: initial !important; /* Uses browser default for emojis */
-            text-shadow: none !important;
-            display: inline-block; /* Or inline, depending on context */
-            font-style: normal; /* Ensure no inherited font style breaks it */
-            /* Optionally, specify emoji fonts as a fallback */
-            /* font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif; */
-        }
-        
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            overflow: hidden;
-        }
-        
-        .floating-element {
-            position: absolute;
-            opacity: 0.15; 
-            animation-name: float;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .floating-element:nth-child(1) { top: 10%; left: 5%; font-size: 3rem; animation-duration: 15s; }
-        .floating-element:nth-child(2) { top: 20%; right: 8%; font-size: 2.5rem; animation-duration: 18s; animation-delay: -3s; }
-        .floating-element:nth-child(3) { top: 40%; left: 3%; font-size: 3.5rem; animation-duration: 20s; animation-delay: -5s; }
-        .floating-element:nth-child(4) { bottom: 15%; right: 5%; font-size: 2.8rem; animation-duration: 16s; animation-delay: -7s; }
-        .floating-element:nth-child(5) { bottom: 25%; left: 7%; font-size: 3.2rem; animation-duration: 22s; animation-delay: -10s; }
-        .floating-element:nth-child(6) { top: 30%; right: 15%; font-size: 2.7rem; animation-duration: 17s; animation-delay: -2s; }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            25% { transform: translate(40px, 60px) rotate(70deg) scale(1.05); }
-            50% { transform: translate(80px, 20px) rotate(160deg) scale(1); }
-            75% { transform: translate(30px, -40px) rotate(250deg) scale(0.95); }
-            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-        }
-        
-        .container {
-            position: relative;
-            z-index: 2;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 4rem; 
-            animation: fadeIn 1.2s ease-out;
-        }
-        
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem; 
-            margin-bottom: 2rem; 
-            flex-wrap: wrap;
-        }
-        
-        .logo {
-            width: 150px; /* Increased size */
-            height: 150px; /* Increased size */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.4s ease; 
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 2rem;
+    }
 
-        .logo img {
-            max-width: 125px; /* Increased size */
-            max-height: 125px; /* Increased size */
-            background-color: var(--light); 
-            border-radius: 50%; 
-            padding: 8px; /* Adjusted padding */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: all 0.3s ease;
-        }
-        .logo img:hover {
-            box-shadow: 0 10px 25px rgba(var(--tagline-glow), 0.3);
-        }
-        
-        .logo:hover {
-            transform: scale(1.08); 
-        }
-        
-        .graduation-icon {
-            font-size: 5.5rem; 
-            background: linear-gradient(45deg, var(--warning), #f9a825); 
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: drop-shadow(0 5px 10px rgba(251, 191, 36, 0.4));
-            animation: bounce 2.5s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-18px); } 
-        }
-        
-        h1.title {
-            font-size: 4.2rem; 
-            font-weight: 800;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-        }
-        
-        .subtitle {
-            font-size: 1.6rem; 
-            color: #cbd5e1; 
-            max-width: 850px;
-            margin: 0 auto 2rem;
-            opacity: 0.95;
-        }
-        
-        .tagline {
-            font-size: 1.9rem; 
-            font-weight: 700;
-            font-style: italic;
-            color: var(--tagline-glow); 
-            text-shadow: 0 0 10px var(--tagline-glow), 0 0 15px var(--tagline-glow), 0 0 22px rgba(144, 213, 255, 0.75); 
-            margin-bottom: 3rem;
-        }
-        
-        .problem-section, .whatsapp-section, .tech-section, .team-section, .university-section {
-            border-radius: 24px; 
-            padding: 3rem; 
-            margin-bottom: 3.5rem; 
-            backdrop-filter: blur(18px); 
-            animation: slideUp 0.9s ease-out;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-        }
+    .poster-container {
+      max-width: 1700px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+    }
 
-        .problem-section {
-            background: linear-gradient(140deg, rgba(239, 68, 68, 0.12), rgba(220, 38, 38, 0.18));
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            text-align: center;
-        }
+    .poster-header {
+      background: var(--header-gradient);
+      color: white;
+      padding: 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .whatsapp-section { 
-            background: linear-gradient(140deg, rgba(34, 197, 94, 0.12), rgba(22, 163, 74, 0.18));
-            border-color: rgba(34, 197, 94, 0.25);
-            text-align: center;
-        }
-        
-        .section-title {
-            font-size: 2rem; 
-            font-weight: 700; 
-            margin-bottom: 2rem; 
-            display: flex;
-            align-items: center;
-            justify-content: center; 
-            gap: 1rem; 
-        }
-        
-        .problem-title {
-            background: linear-gradient(45deg, var(--danger), #c0392b); 
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
+    .poster-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    }
 
-        .whatsapp-title {
-            background: linear-gradient(45deg, var(--success), #18a571); 
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
-        
-        .problem-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 2.5rem;
-            text-align: left; 
-        }
-        
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 18px; 
-            padding: 2rem; 
-            border: 1px solid var(--border-color);
-            transition: all 0.35s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-6px) scale(1.02); 
-            box-shadow: 0 12px 25px rgba(239, 68, 68, 0.15);
-            border-color: rgba(239,68,68,0.3);
-        }
-        
-        .stat-number {
-            font-size: 2.8rem; 
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--danger), #c0392b);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            line-height: 1.1;
-            margin-bottom: 0.75rem;
-        }
-        
-        .stat-label {
-            font-size: 1rem; 
-            color: #ced4da; 
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); 
-            gap: 2.5rem; 
-            margin-bottom: 3.5rem;
-        }
-        
-        .feature-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 2.5rem; 
-            border: 1px solid var(--border-color);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            backdrop-filter: blur(18px);
-            position: relative;
-            overflow: hidden;
-            background-image: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%); 
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px; 
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            opacity: 0;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px); 
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35); 
-            border-color: rgba(var(--primary-rgb), 0.4); 
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-            transform: scaleX(1);
-        }
-        
-        .card-title {
-            font-size: 1.6rem; 
-            font-weight: 700; 
-            margin-bottom: 1.8rem; 
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .card-title .emoji-icon { /* Ensure emoji in card title is sized appropriately */
-            font-size: 1.8rem; /* Match roughly with text or slightly larger */
-        }
+    .poster-header > * {
+      position: relative;
+      z-index: 1;
+    }
 
-        .innovation-title { background: linear-gradient(45deg, var(--tech-blue), #2ecc71); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .advantages-title { background: linear-gradient(45deg, var(--success), #3498db); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .impact-title { background: linear-gradient(45deg, var(--accent), #e67e22); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .objectives-title { background: linear-gradient(45deg, var(--warning), #e74c3c); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        
-        .feature-list { list-style: none; padding-left: 0; }
-        
-        .feature-list li {
-            margin-bottom: 1rem; 
-            padding-left: 2rem; 
-            position: relative;
-            color: #d1d9e0; 
-            transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
-            border-radius: 4px;
-        }
-        
-        .feature-list li::before {
-            content: '▹';
-            position: absolute;
-            left: 0.5rem; 
-            top: 2px;
-            color: var(--tech-blue);
-            font-weight: bold;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-list li:hover {
-            color: var(--tech-blue);
-            transform: translateX(5px);
-            background-color: rgba(var(--tech-blue-rgb), 0.05); 
-        }
-        .feature-list li:hover::before {
-            transform: scale(1.3) translateX(-2px);
-        }
-        
-        .tech-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-        }
-        
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem; 
-            margin-top: 2rem;
-        }
-        
-        .tech-tag {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-            color: var(--tech-blue);
-            padding: 0.6rem 1.2rem; 
-            border-radius: 10px; 
-            font-size: 0.9rem; 
-            font-weight: 600;
-            font-family: 'Roboto Mono', monospace;
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            transition: all 0.3s ease;
-        }
-        
-        .tech-tag:hover {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.25);
-            color: #fff; 
-        }
-        
-        .team-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2.5rem;
-        }
-        
-        .team-leader {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
-            color: var(--warning);
-            padding: 1.2rem;
-            border-radius: 16px;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 700;
-            font-size: 1.1rem; 
-        }
-        .team-leader .emoji-icon {
-            margin-right: 0.5em;
-        }
-        
-        .team-members {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.2rem; 
-        }
-        
-        .team-member {
-            color: #d1d9e0;
-            transition: color 0.3s ease, transform 0.3s ease;
-            padding: 0.2rem 0;
-        }
-        .team-member .emoji-icon {
-            margin-right: 0.5em;
-        }
-        
-        .team-member:hover {
-            color: var(--tech-blue);
-            transform: translateX(3px);
-        }
-        
-        .supervisor-card {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.15));
-            padding: 2rem; 
-            border-radius: 18px;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            text-align: center;
-        }
-        .supervisor-card .emoji-icon { /* Explicitly style emoji here */
-            font-size: 2.5rem; 
-            margin-bottom: 0.75rem;
-            display:block; /* To allow margin-bottom */
-        }
-        
-        .supervisor-title {
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--warning), #f9a825);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 0.75rem;
-            font-size: 1.2rem;
-        }
-        
-        .university-section {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-            border: 1px solid var(--border-color);
-        }
-        
-        .university-title {
-            font-size: 2.8rem; 
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--warning), #f9a825);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 1.2rem;
-        }
-        
-        .university-subtitle {
-            font-size: 1.4rem; 
-            color: #cbd5e1;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-        }
-        
-        .achievements {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem; 
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .achievement-item {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 2rem; 
-            min-width: 140px; 
-            border: 1px solid rgba(var(--primary-rgb), 0.2); 
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-        }
-        
-        .achievement-item:hover {
-            transform: translateY(-7px) scale(1.03);
-            box-shadow: 0 10px 20px rgba(var(--primary-rgb),0.15);
-        }
-        
-        .achievement-number { /* For text-based numbers */
-            font-size: 2.8rem; 
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-        }
-        .achievement-item .emoji-icon.large-emoji { /* For large emoji in achievement item */
-            font-size: 2.8rem; /* Match number size */
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-            display: block; /* To take up space like number */
-        }
-        
-        .achievement-label {
-            font-size: 1rem; 
-            color: #b0b8c0; 
-            margin-top: 0.75rem;
-            font-weight: 500;
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0px); } }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        @media (max-width: 1024px) {
-            .features-grid { grid-template-columns: 1fr; }
-            .team-grid { grid-template-columns: 1fr; gap: 2rem; }
-            h1.title { font-size: 3.5rem; }
-            .problem-stats { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-            .section-title { font-size: 1.8rem; }
-            .card-title { font-size: 1.5rem; }
-        }
-        
-        @media (max-width: 768px) {
-            .container { padding: 1.5rem; } 
-            h1.title { font-size: 2.8rem; }
-            .subtitle { font-size: 1.3rem; }
-            .tagline { font-size: 1.5rem; }
-            .graduation-icon { font-size: 4rem; }
-            .problem-section, .whatsapp-section, .tech-section, .team-section, .university-section, .feature-card { padding: 2rem; } 
-            .achievements { flex-direction: column; gap: 1.5rem; }
-            .logo-container { flex-direction: column; gap: 1.5rem; }
-            .problem-stats { grid-template-columns: 1fr; }
-            .team-members { grid-template-columns: 1fr; } 
-        }
+    .header-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: auto;
+    }
 
-    </style>
+    .project-logo {
+      width: 320px;
+      height: 150px;
+      border-radius: 16px;
+      padding: 8px;
+    }
+
+    .university-logos {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .university-logo {
+      width: 200px;
+      height: 200px;
+      border-radius: 16px;
+      padding: 8px;
+    }
+
+    .project-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.02em;
+      background: linear-gradient(45deg, #ffffff, #e0f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .project-subtitle {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+      font-style: italic;
+    }
+
+    .team-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      max-width: 15000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-member-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-member-role {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .university-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .university-info {
+      text-align: center;
+    }
+
+    .university-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .department-info {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    .poster-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      padding: 3rem;
+      background: linear-gradient(135deg, #fafbfc 0%, #f1f5f9 100%);
+    }
+
+    .poster-section {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      height: auto;
+    }
+
+    .poster-section:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      border-bottom: 3px solid var(--secondary-blue);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--secondary-blue);
+      border-radius: 50%;
+    }
+
+    .section-content {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 2;
+    }
+
+    .section-content p {
+      margin-bottom: 1rem;
+    }
+
+    .section-content ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .section-content li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+      transition: color 0.2s ease;
+    }
+
+    .section-content li:hover {
+      color: var(--text-primary);
+    }
+
+    .section-content li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: var(--secondary-blue);
+      font-size: 0.8rem;
+    }
+
+    .results-list li::before {
+      content: '✓';
+      background: var(--success-green);
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .architecture-section {
+      grid-column: span 2;
+    }
+
+    .lamapbx-section {
+      grid-column: span 3;
+    }
+
+    /* --- MODIFICATION START --- */
+
+    /* The container for diagram images.
+       Height is now 'auto' to dynamically fit the image. */
+    .diagram-placeholder {
+      width: 100%;
+      height: auto; /* MODIFIED: Removed fixed height */
+      border: 2px dashed var(--secondary-blue);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      overflow: hidden; /* Ensures image corners respect the border-radius */
+    }
+    
+    /* Removed the fixed height for the large version as well */
+    .diagram-placeholder.large {
+       /* No fixed height needed */
+    }
+    
+    /* Removed the background gradient pseudo-element as it doesn't work well with dynamic heights */
+    .diagram-placeholder::before {
+      display: none;
+    }
+    
+    .diagram-placeholder:hover {
+      border-color: var(--primary-blue);
+    }
+
+    /* Styling for header logos */
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Styling for diagram images.
+       This makes the image responsive and maintain its aspect ratio. */
+    .diagram-img {
+      max-width: 100%; /* MODIFIED: Use max-width for responsiveness */
+      height: auto;      /* MODIFIED: Let height adjust automatically */
+      border-radius: 8px;
+      display: block; /* Removes any extra space below the image */
+    }
+    
+    /* --- MODIFICATION END --- */
+
+    .poster-footer {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .supervisor-info h3 {
+      color: var(--primary-blue);
+      font-size: 1.7rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .supervisor-info p {
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .qr-section {
+      text-align: center;
+    }
+
+    .qr-code {
+      width: 240px;
+      height: 240px;
+      border: 3px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 1rem;
+    }
+
+    .qr-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 1400px) {
+      .poster-body {
+        grid-template-columns: 1fr 1fr;
+      }
+      .lamapbx-section {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .poster-body {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+      .architecture-section,
+      .lamapbx-section {
+        grid-column: span 1;
+      }
+      .poster-header {
+        padding: 2rem 1.5rem;
+      }
+      .team-section {
+        grid-template-columns: 1fr;
+      }
+      .poster-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+      .header-logos {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      .poster-header {
+        padding: 1.5rem 1rem;
+      }
+      /* NOTE: The logo container size is adjusted here, the logo-img inside will adapt */
+      .project-logo,
+      .university-logo {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="gradient-bg">
-        <div class="floating-elements">
-            <div class="floating-element"><span class="emoji-icon">🤖</span></div> 
-            <div class="floating-element"><span class="emoji-icon">🧠</span></div>
-            <div class="floating-element"><span class="emoji-icon">⚡</span></div> 
-            <div class="floating-element"><span class="emoji-icon">📱</span></div>
-            <div class="floating-element"><span class="emoji-icon">🔧</span></div> 
-            <div class="floating-element"><span class="emoji-icon">📞</span></div>
+  <div class="poster-container">
+    <header class="poster-header">
+      <div class="header-logos">
+        <div class="project-logo">
+          <img src="logo.png" alt="LamaPBX Logo" class="logo-img">
         </div>
-        
-        <div class="container">
-            <header class="header">
-                <div class="logo-container">
-                    <div class="logo">
-                        <img src="logo.png" alt="LamaPBX Logo">
-                    </div>
-                    <div class="graduation-icon"><span class="emoji-icon">🎓</span></div>
-                </div>
-                
-                <h1 class="title">LamaPBX AI Platform</h1>
-                <p class="subtitle">An AI-Native, Intuitive, and Scalable Workflow Platform for Intelligent Customer Engagement</p>
-                <p class="tagline">"Redefining Customer Experience with AI-Powered Automation"</p>
-            </header>
-            
-            <section class="problem-section">
-                <h2 class="section-title problem-title"><span class="emoji-icon">⚠️</span> Addressing Customer Service Challenges</h2>
-                <p style="color: #e0e6eb; margin-bottom: 2rem; text-align:center; font-size: 1.1rem;">Traditional customer service systems are failing to meet modern expectations. LamaPBX directly tackles these critical issues:</p>
-                
-                <div class="problem-stats">
-                    <div class="stat-card"><span class="stat-number">91%</span><span class="stat-label">Repeat purchases after positive service experiences</span></div>
-                    <div class="stat-card"><span class="stat-number">83%</span><span class="stat-label">Higher brand loyalty with prompt responses</span></div>
-                    <div class="stat-card"><span class="stat-number">57%</span><span class="stat-label">Customers prioritize service over price</span></div>
-                    <div class="stat-card"><span class="stat-number">70%</span><span class="stat-label">Potential cost reduction with AI automation</span></div>
-                </div>
-            </section>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="card-title innovation-title"><span class="emoji-icon">🚀</span> Core Innovation</h3>
-                    <ul class="feature-list">
-                        <li>24/7 Multichannel Support (Voice, Web, Mobile)</li>
-                        <li>AI Agents with Advanced Reasoning & Tool Use</li>
-                        <li>Low-Code Orchestration Studio (Drag-and-drop)</li>
-                        <li>Retrieval-Augmented Generation (RAG) Technology</li>
-                        <li>Human-Like Voice Interaction (STT/TTS)</li>
-                        <li>Deep Document Understanding (PDF, Word, Excel)</li>
-                        <li>Cross-Platform Mobile App (Flutter)</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="card-title advantages-title"><span class="emoji-icon">🏆</span> Competitive Edge</h3>
-                    <ul class="feature-list">
-                        <li>Full-stack solution (Backend + Frontend + Mobile)</li>
-                        <li>Multi-LLM Support (OpenAI, Claude, LLaMA, Gemini)</li>
-                        <li>Cost-effective open-source architecture</li>
-                        <li>Scalable cloud/on-premise deployment</li>
-                        <li>Modular plug-and-play design</li>
-                        <li>Optimized LLMOps for efficiency</li>
-                        <li>Voice cloning for brand consistency</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="card-title impact-title"><span class="emoji-icon">🌍</span> Market Impact</h3>
-                    <ul class="feature-list">
-                        <li><strong>For Businesses:</strong> Up to 70% cost reduction in support operations</li>
-                        <li><strong>For Customers:</strong> Instant, 24/7 personalized support</li>
-                        <li><strong>For SMEs:</strong> Enterprise-grade AI at affordable prices</li>
-                        <li><strong>For Industries:</strong> Revolutionizes e-commerce, banking, healthcare & more</li>
-                        <li><strong>For Developers:</strong> Rapid deployment with reusable modules</li>
-                    </ul>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="card-title objectives-title"><span class="emoji-icon">🎯</span> Key Objectives</h3>
-                    <ul class="feature-list">
-                        <li>Eliminate long wait times via AI automation</li>
-                        <li>Ensure consistent, high-quality 24/7 service</li>
-                        <li>Drastically reduce operational costs</li>
-                        <li>Handle complex data with intelligent processing</li>
-                        <li>Provide real-time, cross-platform monitoring</li>
-                        <li>Deliver hyper-personalized customer experiences</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="university-logos">
+          <div class="university-logo">
+            <img src="university.png" alt="University Logo" class="logo-img">
+          </div>
+          <div class="university-logo">
+            <img src="department.png" alt="Department Logo" class="logo-img">
+          </div>
+        </div>
+      </div>
 
-            <section class="whatsapp-section">
-                <h2 class="section-title whatsapp-title"><span class="emoji-icon">💬</span> Connect via WhatsApp</h2>
-                <p style="color: #e0e6eb; margin-bottom: 2rem; font-size: 1.1rem;">Scan the QR code to start an instant conversation or connect with our team!</p>
-                <img src="qrcode.png" alt="WhatsApp QR Code" style="width: 200px; height: 200px; border-radius: 16px; border: 3px solid var(--tech-blue); box-shadow: 0 8px 25px rgba(var(--tech-blue-rgb),0.2);">
-                <p style="color: #e0e6eb; margin-top: 1.5rem; font-size: 1rem;">Or reach us at: +201016146382</p>
-            </section>
-            
-            <section class="tech-section">
-                <h2 class="section-title" style="justify-content: flex-start;"><span class="emoji-icon">🛠️</span> Technology Stack</h2>
-                <p style="color: #e0e6eb; margin-bottom: 1.5rem; font-size:1.1rem;">Powered by a robust stack for maximum performance and scalability:</p>
-                
-                <div class="tech-stack">
-                    <span class="tech-tag">Flask</span><span class="tech-tag">SQLAlchemy</span><span class="tech-tag">Celery</span>
-                    <span class="tech-tag">Next.js</span><span class="tech-tag">React</span><span class="tech-tag">Tailwind CSS</span>
-                    <span class="tech-tag">Flutter</span><span class="tech-tag">Docker</span><span class="tech-tag">REST APIs</span>
-                    <span class="tech-tag">GPT-4</span><span class="tech-tag">Claude 3</span><span class="tech-tag">Whisper</span>
-                    <span class="tech-tag">Qdrant</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">Twilio</span>
-                    <span class="tech-tag">ElevenLabs</span><span class="tech-tag">LLaMA 3</span><span class="tech-tag">Gemini</span>
-                </div>
-            </section>
-            
-            <section class="team-section">
-                <div class="team-grid">
-                    <div>
-                        <h2 class="section-title" style="justify-content: flex-start;"><span class="emoji-icon">👨‍💻</span> Development Team</h2>
-                        <div class="team-leader">
-                            <span class="emoji-icon">🚀</span> Haitham Ramadan (Team Leader)
-                        </div>
-                        <div class="team-members">
-                            <span class="team-member"><span class="emoji-icon">💻</span> Mariam Gamal</span>
-                            <span class="team-member"><span class="emoji-icon">📱</span> Radwa Ahmed</span>
-                            <span class="team-member"><span class="emoji-icon">🎨</span> Mohammed Ashraf</span>
-                            <span class="team-member"><span class="emoji-icon">🎨</span> Mariam Tarek</span> 
-                            <span class="team-member"><span class="emoji-icon">🎨</span> Reham Abdelaleem</span> 
-                        </div>
-                    </div>
-                    
-                    <div class="supervisor-card">
-                        <div><span class="emoji-icon">🧑‍🏫</span></div>
-                        <h3 class="supervisor-title">Project Supervisor</h3>
-                        <p style="color: #e0e6eb; font-size: 1rem;">
-                            <strong>Prof. Ahmed Salah El-Din Mohamed Ali</strong><br>
-                            <span style="color: #adb5bd; font-size: 0.9rem;">Head of Electronics & Communication Dept.</span>
-                        </p>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="university-section">
-                <h2 class="university-title"><span class="emoji-icon">🏛️</span> Helwan University</h2>
-                <p class="university-subtitle">Faculty of Engineering • Electronics & Communication Department</p>
-                
-                <div class="achievements">
-                    <div class="achievement-item"><span class="achievement-number">10+</span><span class="achievement-label">AI Technologies</span></div>
-                    <div class="achievement-item"><span class="achievement-number">24/7</span><span class="achievement-label">Always-On Support</span></div>
-                    <div class="achievement-item"><span class="achievement-number">70%</span><span class="achievement-label">Avg. Cost Reduction</span></div>
-                    <div class="achievement-item"><span class="emoji-icon large-emoji">🚀</span><span class="achievement-label">Infinite Potential</span></div>
-                </div>
-            </section>
+      <h1 class="project-title">LamaPBX AI Platform</h1>
+      <p class="project-subtitle">"Redefining Customer Experience with AI-Powered Automation"</p>
+      
+      <div class="team-section">
+        <div class="team-member">
+          <div class="team-member-name">Haitham Ramadan</div>
+          <div class="team-member-role">AI & Backend Developer | Team Leader</div>
         </div>
-    </div>
+        <div class="team-member">
+          <div class="team-member-name">Mariam Gamal</div>
+          <div class="team-member-role">Backend Developer</div>
+        </div>
+        <div class="team-member">
+          <div class="team-member-name">Radwa Ahmed</div>
+          <div class="team-member-role">Flutter Developer </div>
+        </div>
+        <div class="team-member">
+          <div class="team-member-name">Mohammed Ashraf</div>
+          <div class="team-member-role">Frontend Developer</div>
+        </div>
+        <div class="team-member">
+          <div class="team-member-name">Mariam Tarek</div>
+          <div class="team-member-role">Frontend Developer</div>
+        </div>
+        <div class="team-member">
+          <div class="team-member-name">Reham Abdelaleem</div>
+          <div class="team-member-role">Frontend Developer</div>
+        </div>
+      </div>
+
+      <div class="university-section">
+        <div class="university-info">
+          <div class="university-name">Helwan University</div>
+          <div class="department-info">Faculty of Engineering • Electronics & Communication Dept.</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="poster-body">
+      <section class="poster-section">
+        <h2 class="section-title">Introduction & Abstract</h2>
+        <div class="section-content">
+          <p>LamaPBX is a revolutionary full-stack, AI-native workflow platform designed to transform customer engagement through intelligent automation.</p>
+          <p>The platform leverages multi-LLM backends, low-code orchestration, and cross-platform applications to provide businesses with scalable, cost-effective 24/7 customer service solutions.</p>
+          <p><strong>Key Innovation:</strong> Seamless integration of multiple AI models with human-like interaction capabilities.</p>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">Problem Statement</h2>
+        <div class="section-content">
+          <p>Traditional customer service systems fail to meet modern expectations, resulting in:</p>
+          <ul>
+            <li>High operational costs and long wait times</li>
+            <li>Inconsistent service quality across channels</li>
+            <li>Limited 24/7 availability</li>
+            <li>Poor handling of complex queries</li>
+            <li>Lack of personalization at scale</li>
+          </ul>
+          <p><strong>Market Impact:</strong> 91% of customers make repeat purchases after positive service experiences.</p>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">Methodology & Approach</h2>
+        <div class="section-content">
+          <ul>
+            <li><strong>Multi-LLM Architecture:</strong> OpenAI, Claude, LLaMA, Gemini integration</li>
+            <li><strong>RAG Technology:</strong> Advanced document understanding</li>
+            <li><strong>Low-Code Studio:</strong> Drag-and-drop workflow orchestration</li>
+            <li><strong>Voice Integration:</strong> STT/TTS with voice cloning</li>
+            <li><strong>Cross-Platform Design:</strong> Web, mobile, and API access</li>
+            <li><strong>Microservices Architecture:</strong> Scalable and modular design</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="poster-section architecture-section">
+        <h2 class="section-title">System Architecture</h2>
+        <div class="section-content">
+          <div class="diagram-placeholder">
+            <img src="system_architecture.png" alt="System Architecture Diagram" class="diagram-img">
+          </div>
+          <p>Built on modern microservices architecture ensuring scalability, maintainability, and high availability across all components.</p>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">AI Model Integration</h2>
+        <div class="section-content">
+          <div class="diagram-placeholder">
+             <img src="ai_model_support.png" alt="AI Model Support Diagram" class="diagram-img">
+          </div>
+          <ul>
+            <li>Dynamic model selection based on query complexity</li>
+            <li>Cost optimization through intelligent routing</li>
+            <li>Fallback mechanisms for high availability</li>
+            <li>Performance monitoring and analytics</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">Results & Impact</h2>
+        <div class="section-content">
+          <ul class="results-list">
+            <li>Achieved 70% cost reduction in operations</li>
+            <li>Established 24/7 support availability</li>
+            <li>Enabled hyper-personalized experiences</li>
+            <li>Provided enterprise AI access for SMEs</li>
+            <li>Incorporated 10+ cutting-edge AI technologies</li>
+            <li>Rapid deployment and scaling capabilities</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="poster-section architecture-section">
+        <h2 class="section-title">System Integration Flow</h2>
+        <div class="section-content">
+           <div class="diagram-placeholder">
+            <img src="how_lamapbx_connected.png" alt="System Integration Flow Diagram" class="diagram-img">
+          </div>
+          <p>Seamless integration ensuring optimal performance and user experience across all platforms and touchpoints.</p>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">Market Impact</h2>
+        <div class="section-content">
+          <ul>
+            <li><strong>Businesses:</strong> Up to 70% operational cost reduction</li>
+            <li><strong>Customers:</strong> Instant 24/7 personalized support</li>
+            <li><strong>SMEs:</strong> Enterprise-grade AI at affordable prices</li>
+            <li><strong>Industries:</strong> Transformation across e-commerce, banking, healthcare</li>
+            <li><strong>Developers:</strong> Rapid deployment with reusable modules</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="poster-section">
+        <h2 class="section-title">Conclusion & Future Work</h2>
+        <div class="section-content">
+          <p><strong>Achievements:</strong> Successfully developed a comprehensive AI-powered customer service platform that bridges the gap between enterprise needs and accessible technology.</p>
+          <p><strong>Future Enhancements:</strong></p>
+          <ul>
+            <li>Advanced analytics and reporting dashboard</li>
+            <li>Integration with more third-party services</li>
+            <li>Enhanced multilingual support</li>
+            <li>Expanded AI model ecosystem</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="poster-section lamapbx-section">
+        <h2 class="section-title">All About LamaPBX</h2>
+        <div class="section-content">
+          <div class="diagram-placeholder large">
+             <img src="overall_system_blocks.png" alt="Overall System Blocks Diagram" class="diagram-img">
+          </div>
+          <p>Comprehensive overview showcasing LamaPBX's complete ecosystem, features, and capabilities in transforming customer service through AI-powered automation.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="poster-footer">
+      <div class="supervisor-info">
+        <h3>Project Supervisor</h3>
+        <p><strong>Prof. Ahmed Salah El-Din Mohamed Ali</strong><br>
+        Head of Electronics & Communication Department<br>
+        Helwan University</p>
+      </div>
+      <div class="qr-section">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/201016146382" alt="Project Demo QR Code" class="qr-code">
+        <p class="qr-text">Scan for Live Demo</p>
+        <p class="qr-text">Contact: +201016146382</p>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
