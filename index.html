@@ -282,13 +282,9 @@
       grid-column: span 3;
     }
 
-    /* --- MODIFICATION START --- */
-
-    /* The container for diagram images.
-       Height is now 'auto' to dynamically fit the image. */
     .diagram-placeholder {
       width: 100%;
-      height: auto; /* MODIFIED: Removed fixed height */
+      height: auto;
       border: 2px dashed var(--secondary-blue);
       border-radius: 12px;
       display: flex;
@@ -296,15 +292,13 @@
       align-items: center;
       margin: 1.5rem 0;
       transition: all 0.3s ease;
-      overflow: hidden; /* Ensures image corners respect the border-radius */
+      overflow: hidden;
     }
     
-    /* Removed the fixed height for the large version as well */
     .diagram-placeholder.large {
        /* No fixed height needed */
     }
     
-    /* Removed the background gradient pseudo-element as it doesn't work well with dynamic heights */
     .diagram-placeholder::before {
       display: none;
     }
@@ -313,7 +307,6 @@
       border-color: var(--primary-blue);
     }
 
-    /* Styling for header logos */
     .logo-img {
       width: 100%;
       height: 100%;
@@ -321,16 +314,12 @@
       border-radius: 8px;
     }
 
-    /* Styling for diagram images.
-       This makes the image responsive and maintain its aspect ratio. */
     .diagram-img {
-      max-width: 100%; /* MODIFIED: Use max-width for responsiveness */
-      height: auto;      /* MODIFIED: Let height adjust automatically */
+      max-width: 100%;
+      height: auto;
       border-radius: 8px;
-      display: block; /* Removes any extra space below the image */
+      display: block;
     }
-    
-    /* --- MODIFICATION END --- */
 
     .poster-footer {
       background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
@@ -380,8 +369,12 @@
       .poster-body {
         grid-template-columns: 1fr 1fr;
       }
-      .lamapbx-section {
+      .lamapbx-section,
+      .architecture-section { /* Ensure 2-column sections also span full width */
         grid-column: span 2;
+      }
+      .poster-section { /* Single column items will stack */
+        grid-column: span 1;
       }
     }
 
@@ -417,7 +410,6 @@
       .poster-header {
         padding: 1.5rem 1rem;
       }
-      /* NOTE: The logo container size is adjusted here, the logo-img inside will adapt */
       .project-logo,
       .university-logo {
         width: 80px;
@@ -482,6 +474,7 @@
     </header>
 
     <main class="poster-body">
+      <!-- Row 1 -->
       <section class="poster-section">
         <h2 class="section-title">Introduction & Abstract</h2>
         <div class="section-content">
@@ -520,6 +513,7 @@
         </div>
       </section>
 
+      <!-- Row 2 -->
       <section class="poster-section architecture-section">
         <h2 class="section-title">System Architecture</h2>
         <div class="section-content">
@@ -544,7 +538,31 @@
           </ul>
         </div>
       </section>
-
+      
+      <!-- Row 3: Hardware and System Integration Flow -->
+      <section class="poster-section">
+        <h2 class="section-title">Hardware Appliance</h2>
+        <div class="section-content">
+            <div class="diagram-placeholder">
+                <img src="hardwarefull.png" alt="Hardware Appliance" class="diagram-img">
+            </div>
+            <p>
+                The LamaPBX hardware is a self-contained, plug-and-play appliance that encapsulates the entire ecosystem. It houses all system modules, including robust PBX telephony integrations, containerized software via Docker, pre-loaded AI models, and the complete database. This approach ensures rapid deployment, enhanced security, and optimal performance in a dedicated physical unit.
+            </p>
+        </div>
+      </section>
+      
+      <section class="poster-section architecture-section">
+        <h2 class="section-title">System Integration Flow</h2>
+        <div class="section-content">
+           <div class="diagram-placeholder">
+            <img src="how_lamapbx_connected.png" alt="System Integration Flow Diagram" class="diagram-img">
+          </div>
+          <p>Seamless integration ensuring optimal performance and user experience across all platforms and touchpoints.</p>
+        </div>
+      </section>
+      
+      <!-- Row 4: Results, Market, and Conclusion -->
       <section class="poster-section">
         <h2 class="section-title">Results & Impact</h2>
         <div class="section-content">
@@ -558,17 +576,7 @@
           </ul>
         </div>
       </section>
-
-      <section class="poster-section architecture-section">
-        <h2 class="section-title">System Integration Flow</h2>
-        <div class="section-content">
-           <div class="diagram-placeholder">
-            <img src="how_lamapbx_connected.png" alt="System Integration Flow Diagram" class="diagram-img">
-          </div>
-          <p>Seamless integration ensuring optimal performance and user experience across all platforms and touchpoints.</p>
-        </div>
-      </section>
-
+      
       <section class="poster-section">
         <h2 class="section-title">Market Impact</h2>
         <div class="section-content">
@@ -596,6 +604,7 @@
         </div>
       </section>
 
+      <!-- Row 5 -->
       <section class="poster-section lamapbx-section">
         <h2 class="section-title">All About LamaPBX</h2>
         <div class="section-content">
@@ -623,3 +632,6 @@
   </div>
 </body>
 </html>
+```
+
+I have now updated the layout as you requested. The grid automatically handles the placement of the sections based on their order in the HTML and the CSS classes applied to them. Let me know if you'd like any other adjustmen
